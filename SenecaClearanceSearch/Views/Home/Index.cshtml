@@ -1,0 +1,98 @@
+﻿@model IEnumerable <SenecaClearanceSearch.Models.ApplicantDetail> 
+@{ Layout = null; }
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style type="text/css">
+        table, td, th {
+            border: 1px solid darkblue;
+        }
+
+        th {
+            background-color: blue;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="background-color: lightblue; height: 100px; padding-top: 10px;">
+        <span style="text-align: center;">
+            <h1> Seneca Insurance Clearance: New Applicant/Insured  Search </h1>
+        </span>
+    </div>
+    <div>
+        <table style="margin-left: 35%; margin-top: 10px; border: none;">
+            <tr>
+                @using (Html.BeginForm())
+                {
+                    <td style="border: none;">
+                        <label id="lblApplicantName">Enter Applicant/Insured Name: </label>
+                    </td>
+
+                    <td style="border: none;">@Html.TextBox("item")</td>
+
+                    <td style="border: none;">
+                        <input id="btnSearch" type="submit" value="Search" />
+                    </td>
+                 }
+            </tr>
+        </table>
+    </div>
+    <div>
+    <span style="text-align: center;">
+
+        @if (ViewBag.Message == true)
+        {
+            <label id="lblMessage" title="EnterInsuredName" style="color:red;">Please enter Applicant/Insured Name!..</label>
+        }
+        else
+        {
+            if (Model != null)
+            {
+                if (Model.Count() != 0)
+                {
+                    <table style="border: 2px solid Gray;">
+                        <tr>
+                            @*dt.aNewSubmissionIdentity = (int)reader["NewSubmissionIdentity"];
+                            dt.aRecievedDate = (string)reader["RecievedDate"];
+                            dt.aInsured = (string)reader["Insured"];
+                            dt.aEffectiveDate = (string)reader["EffectiveDate"];
+                            dt.aPolicyNum = (string)reader["PolicyNum"];
+                            dt.aAddr1 = (string)reader["Addr1"];
+                            dt.aStateCode = (string)reader["StateCode"];*@
+
+                            <th>Insured Name</th>
+                            <th>Recieved Date</th>
+                            <th>Policy Num</th>
+                            <th>Effective Date</th>
+                            <th>Insured Address</th>
+                            <th>State</th>
+
+                        </tr>
+                        @foreach (var value in Model)
+                        {
+                            <tr>
+                                <td>@value.aInsured</td>
+                                <td>@value.aRecievedDate</td>
+                                <td>@value.aPolicyNum</td>
+                                <td>@value.aEffectiveDate</td>
+                                <td>@value.aAddr1</td>
+                                <td>@value.aStateCode</td>
+                            </tr>
+                        }
+                    </table>
+                }
+                else
+                {
+                    <label id="lblErrorMsg" title="Record not fount...!" style="color:blue;">This applicant does not exist in the Seneca Insurance Applicants table...</label>
+                }
+            }
+        }
+    </span>
+    </div>
+</body>
+</html>
